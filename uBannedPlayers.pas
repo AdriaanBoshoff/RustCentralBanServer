@@ -118,12 +118,13 @@ begin
   else
   begin
     Result := '';
-    Writeln('============================');
-    Writeln('ERROR Getting Ban:');
-    Writeln('Procedure        : GetBan');
-    Writeln('Reason           : Ban does not exist.');
-    Writeln('SteamID Requested: ' + aSteamID);
-    Writeln('============================');
+    Writeln('Get Ban "' + aSteamID + '" - Ban does not exist.');
+//    Writeln('============================');
+//    Writeln('ERROR Getting Ban:');
+//    Writeln('Procedure        : GetBan');
+//    Writeln('Reason           : Ban does not exist.');
+//    Writeln('SteamID Requested: ' + aSteamID);
+//    Writeln('============================');
   end;
 end;
 
