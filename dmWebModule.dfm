@@ -14,8 +14,10 @@ object WebModuleActions: TWebModuleActions
       OnAction = WebModuleActionsrustBansAction
     end
     item
+      MethodType = mtPost
       Name = 'AddRustBans'
       PathInfo = '/api/addRustBans'
+      OnAction = WebModuleActionsAddRustBansAction
     end>
   Height = 230
   Width = 415
