@@ -46,6 +46,7 @@ begin
     if CheckPort(APort.ToInteger) > 0 then
     begin
       AServer.DefaultPort := APort.ToInteger;
+      WriteSettingInt('port', APort.ToInteger);
       Writeln(Format(sPortSet, [APort]));
     end
     else
@@ -150,7 +151,7 @@ begin
     if WebRequestHandler <> nil then
       WebRequestHandler.WebModuleClass := WebModuleClass;
 
-    RunServer(2855);
+    RunServer(ReadSettingInt('port', 2855));
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);
