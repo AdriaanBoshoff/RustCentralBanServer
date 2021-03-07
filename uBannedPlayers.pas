@@ -17,14 +17,16 @@ type
   TBannedPlayers = class
   private
     var
-      BannedPlayers: TDictionary<string, TPlayer>;
+      Bans: TDictionary<string, TPlayer>;
     const
       BANS_FILE = 'bans.json';
     procedure SaveBans;
+    procedure LoadBans;
   public
     procedure AddBan(const aSteamID: string; const aReason: WideString; const aExpires: Int64);
     procedure RemoveBan(const aSteamID: string);
     function GetBan(const aSteamID: string): WideString;
+    function BanCount: Integer;
   published
     constructor Create;
     destructor Free;
@@ -36,21 +38,21 @@ var
 implementation
 
 uses
-  uMisc;
+  uMisc, System.IOUtils, System.JSON;
 
 { TBannedPlayers }
 
 procedure TBannedPlayers.AddBan(const aSteamID: string; const aReason: WideString; const aExpires: Int64);
 begin
   var pCheckDup: TPlayer;
-  if not BannedPlayers.TryGetValue(aSteamID, pCheckDup) then
+  if not Bans.TryGetValue(aSteamID, pCheckDup) then
   begin
     var aPlayer: TPlayer;
     aPlayer.SteamID := aSteamID;
     aPlayer.Reason := aReason;
     aPlayer.Expires := aExpires;
 
-    BannedPlayers.Add(aPlayer.SteamID, aPlayer);
+    Bans.Add(aPlayer.SteamID, aPlayer);
     Writeln('Added Ban - ' + aSteamID);
 
     if aSteamID <> 'test' then
@@ -58,21 +60,27 @@ begin
   end;
 end;
 
+function TBannedPlayers.BanCount: Integer;
+begin
+  Result := Bans.Count;
+end;
+
 constructor TBannedPlayers.Create;
 begin
-  BannedPlayers := TDictionary<string, TPlayer>.Create;
+  Bans := TDictionary<string, TPlayer>.Create;
+  LoadBans;
 end;
 
 destructor TBannedPlayers.Free;
 begin
-  BannedPlayers.Free;
+  Bans.Free;
 end;
 
 function TBannedPlayers.GetBan(const aSteamID: string): WideString;
 begin
   var aPlayer: TPlayer;
 
-  if BannedPlayers.TryGetValue(aSteamID, aPlayer) then
+  if Bans.TryGetValue(aSteamID, aPlayer) then
   begin
     var StringWriter := TStringWriter.Create;
     var Writer := TJsonTextWriter.Create(StringWriter);
@@ -119,9 +127,41 @@ begin
   end;
 end;
 
+procedure TBannedPlayers.LoadBans;
+begin
+  Bans.Clear;
+
+  var aFile := ExtractFilePath(ParamStr(0)) + BANS_FILE;
+
+  if not FileExists(aFile) then
+  begin
+    Writeln('There are no saved bans to load yet.');
+    Exit;
+  end;
+
+  var jsonBytes := TFile.ReadAllBytes(aFile);
+
+  var jdata := TJSONObject.ParseJSONValue(jsonBytes, 0, True) as TJSONArray;
+  try
+    for var aBan in jdata do
+    begin
+      var aPlayer: TPlayer;
+      aPlayer.SteamID := aBan.GetValue<string>('steamId');
+      aPlayer.Reason := aBan.GetValue<string>('reason');
+      aPlayer.Expires := aBan.GetValue<Int64>('expiryDate');
+
+      Bans.Add(aPlayer.SteamID, aPlayer);
+    end;
+
+    Writeln('Loaded ' + Bans.Count.ToString + ' Bans');
+  finally
+    jdata.Free;
+  end;
+end;
+
 procedure TBannedPlayers.RemoveBan(const aSteamID: string);
 begin
-  BannedPlayers.Remove(aSteamID);
+  Bans.Remove(aSteamID);
   Writeln('Removed ban - ' + aSteamID);
 end;
 
@@ -133,7 +173,7 @@ begin
     Writer.Formatting := TJsonFormatting.Indented;
     try
       Writer.WriteStartArray;
-      for var aPlayer in BannedPlayers.Values do
+      for var aPlayer in Bans.Values do
       begin
         Writer.WriteStartObject;
         Writer.WritePropertyName('steamId');
@@ -148,7 +188,7 @@ begin
 
       SaveToFile(StringWriter.ToString, ExtractFilePath(ParamStr(0)) + BANS_FILE);
 
-      Writeln('Saved ' + BannedPlayers.Count.ToString + ' bans');
+      Writeln('Saved ' + Bans.Count.ToString + ' bans');
     except
       on E: Exception do
       begin
