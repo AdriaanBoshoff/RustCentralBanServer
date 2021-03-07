@@ -106,7 +106,7 @@ begin
   Writeln(sIndyVersion + AServer.SessionList.Version);
   Writeln(sActive + AServer.Active.ToString(TUseBoolStrs.True));
   Writeln(sPort + AServer.DefaultPort.ToString);
-  Writeln(sBannedCount + '');
+  Writeln(sBannedCount + BannedPlayers.BanCount.ToString);
   Write(cArrow);
 end;
 
