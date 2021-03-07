@@ -59,6 +59,12 @@ end;
 
 procedure StartServer(const AServer: TIdHTTPWebBrokerBridge);
 begin
+  if ReadSettingString('apiKey', 'ChangeMe') = 'ChangeMe' then
+  begin
+    Writeln('You make a custom apiKey in the settings file before starting the server!');
+    Exit;
+  end;
+
   if not AServer.Active then
   begin
     if CheckPort(AServer.DefaultPort) > 0 then
@@ -154,6 +160,8 @@ begin
   try
     if WebRequestHandler <> nil then
       WebRequestHandler.WebModuleClass := WebModuleClass;
+
+    GenerateSettings;
 
     RunServer(ReadSettingInt('port', 2855));
   except
