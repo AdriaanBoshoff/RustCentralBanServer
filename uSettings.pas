@@ -10,6 +10,8 @@ function ReadSettingString(const aKey, aDefaultValue: string): string;
 
 function ReadSettingInt(const aKey: string; const aDefaultValue: Integer): Integer;
 
+procedure GenerateSettings;
+
 implementation
 
 uses
@@ -112,6 +114,15 @@ begin
   finally
     ini.Free;
   end;
+end;
+
+procedure GenerateSettings;
+begin
+  if ReadSettingInt('port', 0) = 0 then
+    WriteSettingInt('port', 2855);
+
+  if ReadSettingString('apiKey', 'ChangeMe') = 'ChangeMe' then
+    WriteSettingString('apiKey', 'ChangeMe');
 end;
 
 end.
