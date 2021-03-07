@@ -38,10 +38,6 @@ begin
   var jdata := TJSONObject.ParseJSONValue(Request.Content);
   try
     try
-      Writeln(Request.Content);
-
-      Writeln(jdata.GetValue<string>('apiKey'));
-
       var aKey := jdata.GetValue<string>('apiKey');
 
       if aKey = ReadSettingString('apiKey', '') then
