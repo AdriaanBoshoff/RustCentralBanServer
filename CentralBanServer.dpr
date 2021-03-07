@@ -111,7 +111,10 @@ var
 begin
   WriteCommands;
   LServer := TIdHTTPWebBrokerBridge.Create(nil);
+  BannedPlayers := TBannedPlayers.Create;
   try
+    BannedPlayers.AddBan('test', 'This is a test ban', -1);
+
     LServer.DefaultPort := APort;
     while True do
     begin
@@ -142,6 +145,7 @@ begin
       end;
     end;
   finally
+    BannedPlayers.Free;
     LServer.Free;
   end;
 end;
