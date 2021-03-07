@@ -1,6 +1,9 @@
 # RustCentralBanServer
 Central Banning Server for rust servers and developers.
 
+## Adding a Ban
+Currently you can only add bans via the api endpoint at the bottom. You can also add the bans manually in the bans.json file however this will require the ban server to be restarted. New methods for adding bans will be added soon.
+
 ## Setting up with your Rust Server
 Example: ```server.bansServerEndpoint "https://contoso.com/api/rustBans/"```.
 <br>
