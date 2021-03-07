@@ -12,7 +12,8 @@ uses
   dmWebModule in 'dmWebModule.pas' {WebModuleActions: TWebModule},
   ServerConst in 'ServerConst.pas',
   uMisc in 'uMisc.pas',
-  uBannedPlayers in 'uBannedPlayers.pas';
+  uBannedPlayers in 'uBannedPlayers.pas',
+  uSettings in 'uSettings.pas';
 
 {$R *.res}
 
@@ -148,6 +149,7 @@ begin
   try
     if WebRequestHandler <> nil then
       WebRequestHandler.WebModuleClass := WebModuleClass;
+
     RunServer(2855);
   except
     on E: Exception do
