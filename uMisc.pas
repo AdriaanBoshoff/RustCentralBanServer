@@ -2,6 +2,10 @@ unit uMisc;
 
 interface
 
+function LoadFromFile(const aFile: string): WideString;
+
+procedure SaveToFile(const aText, aFile: WideString);
+
 implementation
 
 uses
