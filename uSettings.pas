@@ -24,7 +24,19 @@ begin
 
   var ini := TIniFile.Create(aFile);
   try
-    ini.WriteString('settings', aKey, aValue);
+    try
+      ini.WriteString('settings', aKey, aValue);
+    except
+      on E: Exception do
+      begin
+        Writeln('============================');
+        Writeln('ERROR Writing Setting STRING:');
+        Writeln('Procedure: WriteSettingString');
+        Writeln('Reason   : ' + E.Message);
+        Writeln('Path     : ' + aFile);
+        Writeln('============================');
+      end;
+    end;
   finally
     ini.Free;
   end;
@@ -36,7 +48,19 @@ begin
 
   var ini := TIniFile.Create(aFile);
   try
-    ini.WriteInteger('settings', aKey, aValue);
+    try
+      ini.WriteInteger('settings', aKey, aValue);
+    except
+      on E: Exception do
+      begin
+        Writeln('============================');
+        Writeln('ERROR Writing Setting INT:');
+        Writeln('Procedure: WriteSettingInt');
+        Writeln('Reason   : ' + E.Message);
+        Writeln('Path     : ' + aFile);
+        Writeln('============================');
+      end;
+    end;
   finally
     ini.Free;
   end;
@@ -48,7 +72,19 @@ begin
 
   var ini := TIniFile.Create(aFile);
   try
-    Result := ini.ReadString('settings', aKey, aDefaultValue);
+    try
+      Result := ini.ReadString('settings', aKey, aDefaultValue);
+    except
+      on E: Exception do
+      begin
+        Writeln('============================');
+        Writeln('ERROR Reading Setting STRING:');
+        Writeln('Procedure: ReadSettingString');
+        Writeln('Reason   : ' + E.Message);
+        Writeln('Path     : ' + aFile);
+        Writeln('============================');
+      end;
+    end;
   finally
     ini.Free;
   end;
@@ -60,7 +96,19 @@ begin
 
   var ini := TIniFile.Create(aFile);
   try
-    Result := ini.ReadInteger('settings', aKey, aDefaultValue);
+    try
+      Result := ini.ReadInteger('settings', aKey, aDefaultValue);
+    except
+      on E: Exception do
+      begin
+        Writeln('============================');
+        Writeln('ERROR Reading Setting INT:');
+        Writeln('Procedure: ReadSettingInt');
+        Writeln('Reason   : ' + E.Message);
+        Writeln('Path     : ' + aFile);
+        Writeln('============================');
+      end;
+    end;
   finally
     ini.Free;
   end;
