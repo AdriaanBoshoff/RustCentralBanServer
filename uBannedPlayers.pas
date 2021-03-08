@@ -164,6 +164,7 @@ procedure TBannedPlayers.RemoveBan(const aSteamID: string);
 begin
   Bans.Remove(aSteamID);
   Writeln('Removed ban - ' + aSteamID);
+  SaveBans;
 end;
 
 procedure TBannedPlayers.SaveBans;

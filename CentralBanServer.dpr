@@ -4,6 +4,7 @@ program CentralBanServer;
 uses
   System.SysUtils,
   System.Types,
+  System.Classes,
   IPPeerServer,
   IPPeerAPI,
   IdHTTPWebBrokerBridge,
@@ -95,6 +96,50 @@ begin
   Write(cArrow);
 end;
 
+procedure AddBan(const aCommand: string);
+begin
+  var args := TStringList.Create;
+  try
+    args.DelimitedText := aCommand.Replace(cCommandAddBan, '').Trim;
+
+    if args.Count = 3 then
+    begin
+      var aSteamId := args[0];
+      var aReason := args[1];
+      var aExpires := args[2].ToInt64;
+
+      BannedPlayers.AddBan(aSteamId, aReason, aExpires);
+    end
+    else
+    begin
+      Writeln('Cannot add ban. Invalid Args');
+    end;
+  finally
+    args.Free;
+  end;
+end;
+
+procedure RemoveBan(const aCommand: string);
+begin
+  var args := TStringList.Create;
+  try
+    args.DelimitedText := aCommand.Replace(cCommandRemoveBan, '').Trim;
+
+    if args.Count = 1 then
+    begin
+      var aSteamId := args[0];
+
+      BannedPlayers.RemoveBan(aSteamId);
+    end
+    else
+    begin
+      Writeln('Cannot add ban. Invalid Args');
+    end;
+  finally
+    args.Free;
+  end;
+end;
+
 procedure WriteCommands;
 begin
   Writeln(sCommands);
@@ -130,6 +175,10 @@ begin
         SetPort(LServer, LResponse)
       else if sametext(LResponse, cCommandStart) then
         StartServer(LServer)
+      else if LResponse.StartsWith(cCommandAddBan) then
+        AddBan(LResponse)
+      else if LResponse.StartsWith(cCommandRemoveBan) then
+        RemoveBan(LResponse)
       else if sametext(LResponse, cCommandStatus) then
         WriteStatus(LServer)
       else if sametext(LResponse, cCommandStop) then

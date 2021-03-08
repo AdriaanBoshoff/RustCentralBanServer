@@ -135,7 +135,6 @@
         </DelphiCompile>
         <DCCReference Include="dmWebModule.pas">
             <Form>WebModuleActions</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TWebModule</DesignClass>
         </DCCReference>
         <DCCReference Include="ServerConst.pas"/>

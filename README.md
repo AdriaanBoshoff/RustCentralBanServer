@@ -1,21 +1,23 @@
 # RustCentralBanServer
 Central Banning Server for rust servers and developers.
 
-## Adding a Ban
-Currently you can only add bans via the api endpoint at the bottom. You can also add the bans manually in the bans.json file however this will require the ban server to be restarted. New methods for adding bans will be added soon.
+## Adding and removing a Ban
+You can use the api below or you can use the following commands:
+* Add ban    - `addban <steamid> <reason> <unixtimestamp>` Example: `addban 76561197960287930 "This is a test ban" -1` (-1 = permanent)
+* Remove Ban - `removeban <steamid>` Example: `removeban 76561197960287930`
 
 ## Setting up with your Rust Server
 Example: ```server.bansServerEndpoint "https://contoso.com/api/rustBans/"```.
 <br>
 You can follow the steps Facepunch provided in order to set this up with your rust: https://wiki.facepunch.com/rust/centralized-banning#howdoiuseit
 
-## For Developers
+# For Developers
 This is for external developers that want to uses this central banning system for their own needs.
 
-### Testing
+## Testing
 The ban server has a special "ID" to test if everything is working as it should. Do a ban request on `GET /api/rustBans/test`. You should get a normal Get ban request data.
 
-### Getting a ban
+## Getting a ban
 Perform a `Get` request to the following path adding the SteamID64 to the end: `GET /api/rustBans/{steamID64}`
 
 #### Response
@@ -30,10 +32,10 @@ Body:
 }
 ```
 
-### Adding a ban
+## Adding a ban
 Perform a `Post` request to the following path with the body below: `POST /api/addRustBans`
 
-#### Body
+### Body
 ```json
 {
     "apiKey": "ChangeMe1",
@@ -43,8 +45,11 @@ Perform a `Post` request to the following path with the body below: `POST /api/a
 }
 ```
 
-#### Reponse Codes
+### Reponse Codes
 You will recieve the following response codes:
 * `200` - The ban has been added.
 * `403` - Your apiKey does not match what you set it to be in your settings file.
 * `500` - An internal server error. See console for details.
+
+## Icons
+* <a target="_blank" href="https://icons8.com/icons/set/centralized-network">Centralized Network icon</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>

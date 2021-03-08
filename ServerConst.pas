@@ -18,6 +18,8 @@ resourcestring
   sCommands = 'Enter a Command: ' + slineBreak +
     '   - "start" to start the server'+ slineBreak +
     '   - "stop" to stop the server'+ slineBreak +
+    '   - "addban <steamid> <reason> <unixTimestamp>" to add a ban' + slineBreak +
+    '   - "removeban <steamid>" to remove a ban' + slineBreak +
     '   - "set port" to change the default port'+ slineBreak +
     '   - "status" for Server status'+ slineBreak +
     '   - "help" to show commands'+ slineBreak +
@@ -27,6 +29,8 @@ const
   cArrow = '->';
   cCommandStart = 'start';
   cCommandStop = 'stop';
+  cCommandAddBan = 'addban';
+  cCommandRemoveBan = 'removeban';
   cCommandStatus = 'status';
   cCommandHelp = 'help';
   cCommandSetPort = 'set port';
