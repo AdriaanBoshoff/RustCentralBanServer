@@ -133,7 +133,7 @@ begin
     end
     else
     begin
-      Writeln('Cannot add ban. Invalid Args');
+      Writeln('Cannot remove ban. Invalid Args');
     end;
   finally
     args.Free;
