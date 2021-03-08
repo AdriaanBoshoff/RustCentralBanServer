@@ -3,7 +3,7 @@ Central Banning Server for rust servers and developers.
 
 ## Adding and removing a Ban
 You can use the api below or you can use the following commands:  (-1 = permanent).
-* Add ban - `addban <steamid> <reason> <unixtimestamp>` Example: `addban 76561197960287930 "This is a test ban" -1`.
+* Add ban - `addban <steamid> <reason> <unixtimestamp>` ```Example: addban 76561197960287930 "This is a test ban" -1```
 * Remove Ban - `removeban <steamid>` Example: `removeban 76561197960287930`.
 
 ## Setting up with your Rust Servers
