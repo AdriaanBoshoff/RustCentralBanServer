@@ -3,8 +3,12 @@ Central Banning Server for rust servers and developers.
 
 ## Adding and removing a Ban
 You can use the api below or you can use the following commands:  (-1 = permanent).
-* Add ban - `addban <steamid> <reason> <unixtimestamp>` ```Example: addban 76561197960287930 "This is a test ban" -1```
-* Remove Ban - `removeban <steamid>` Example: `removeban 76561197960287930`.
+* Add ban - `addban <steamid> <reason> <unixtimestamp>` 
+<br>
+Example: `addban 76561197960287930 "This is a test ban" -1`
+* Remove Ban - `removeban <steamid>` 
+<br>
+Example: `removeban 76561197960287930`
 
 ## Setting up with your Rust Servers
 This is really quick and easy to setup. Just follow the steps below and everything will work. For this tutorial lets pretend the central ban server is running on the same machines as your Rust Servers. You will see refernces to `localhost`. This should be the IP address of your remote machine if you do end up running the central ban server on another machine.
