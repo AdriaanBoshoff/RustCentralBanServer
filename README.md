@@ -2,14 +2,23 @@
 Central Banning Server for rust servers and developers.
 
 ## Adding and removing a Ban
-You can use the api below or you can use the following commands:
-* Add ban    - `addban <steamid> <reason> <unixtimestamp>` Example: `addban 76561197960287930 "This is a test ban" -1` (-1 = permanent)
-* Remove Ban - `removeban <steamid>` Example: `removeban 76561197960287930`
+You can use the api below or you can use the following commands:  (-1 = permanent).
+* Add ban - `addban <steamid> <reason> <unixtimestamp>` Example: `addban 76561197960287930 "This is a test ban" -1`.
+* Remove Ban - `removeban <steamid>` Example: `removeban 76561197960287930`.
 
-## Setting up with your Rust Server
-Example: ```server.bansServerEndpoint "https://contoso.com/api/rustBans/"```.
+## Setting up with your Rust Servers
+This is really quick and easy to setup. Just follow the steps below and everything will work. For this tutorial lets pretend the central ban server is running on the same machines as your Rust Servers. You will see refernces to `localhost`. This should be the IP address of your remote machine if you do end up running the central ban server on another machine.
 <br>
-You can follow the steps Facepunch provided in order to set this up with your rust: https://wiki.facepunch.com/rust/centralized-banning#howdoiuseit
+1. Download the latest build from releases area.
+2. Extract it into a folder.
+3. Run the file that you extracted and close it.
+4. You will notice a `settings.ini` file got generated. Edit it and change the `apiKey` to whatever you want. This is like your password to use the central ban server api. Don't share it. Close and save.
+5. Run the application again and type `start`. It will then tell you that the HTTP server has been started.
+6. Now that the central ban server has been started you will need to point your rust servers to the ban server. You can do this by issuing your rust server with the following command:
+```server.bansServerEndpoint "http://localhost:2855/api/rustBans/"```
+Then type the following to make sure the server saves it:
+```server.writecfg```
+7. You're done!. To add a ban to the central ban server you can see the commands above. If you want more options such as what should your server do when when the ban server fails please refer to the rust docs: https://wiki.facepunch.com/rust/centralized-banning#faq
 
 # For Developers
 This is for external developers that want to uses this central banning system for their own needs.
